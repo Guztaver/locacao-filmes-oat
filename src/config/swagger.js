@@ -127,6 +127,51 @@ const options = {
             },
           },
         },
+        Categoria: {
+          type: "object",
+          required: ["nome"],
+          properties: {
+            _id: {
+              type: "string",
+              description: "ID gerado automaticamente pelo MongoDB",
+            },
+            nome: {
+              type: "string",
+              description: "Nome da categoria",
+            },
+            descricao: {
+              type: "string",
+              description: "Descrição da categoria",
+            },
+          },
+        },
+        Ator: {
+          type: "object",
+          required: ["nome"],
+          properties: {
+            _id: {
+              type: "string",
+              description: "ID gerado automaticamente pelo MongoDB",
+            },
+            nome: {
+              type: "string",
+              description: "Nome completo do ator",
+            },
+            dataNascimento: {
+              type: "string",
+              format: "date",
+              description: "Data de nascimento do ator",
+            },
+            nacionalidade: {
+              type: "string",
+              description: "Nacionalidade do ator",
+            },
+            biografia: {
+              type: "string",
+              description: "Biografia do ator",
+            },
+          },
+        },
       },
     },
     paths: {
@@ -507,6 +552,270 @@ const options = {
           },
         },
       },
+      "/categorias": {
+        get: {
+          summary: "Listar todas as categorias",
+          tags: ["Categorias"],
+          responses: {
+            200: {
+              description: "Lista de categorias retornada com sucesso",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "array",
+                    items: { $ref: "#/components/schemas/Categoria" },
+                  },
+                },
+              },
+            },
+          },
+        },
+        post: {
+          summary: "Criar uma nova categoria",
+          tags: ["Categorias"],
+          requestBody: {
+            required: true,
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  required: ["nome"],
+                  properties: {
+                    nome: { type: "string" },
+                    descricao: { type: "string" },
+                  },
+                },
+              },
+            },
+          },
+          responses: {
+            201: {
+              description: "Categoria criada com sucesso",
+              content: {
+                "application/json": {
+                  schema: { $ref: "#/components/schemas/Categoria" },
+                },
+              },
+            },
+          },
+        },
+      },
+      "/categorias/{id}": {
+        get: {
+          summary: "Obter uma categoria pelo ID",
+          tags: ["Categorias"],
+          parameters: [
+            {
+              in: "path",
+              name: "id",
+              schema: { type: "string" },
+              required: true,
+              description: "ID da categoria",
+            },
+          ],
+          responses: {
+            200: {
+              description: "Dados da categoria retornados com sucesso",
+              content: {
+                "application/json": {
+                  schema: { $ref: "#/components/schemas/Categoria" },
+                },
+              },
+            },
+            404: {
+              description: "Categoria não encontrada",
+            },
+          },
+        },
+        put: {
+          summary: "Atualizar uma categoria existente",
+          tags: ["Categorias"],
+          parameters: [
+            {
+              in: "path",
+              name: "id",
+              schema: { type: "string" },
+              required: true,
+              description: "ID da categoria",
+            },
+          ],
+          requestBody: {
+            required: true,
+            content: {
+              "application/json": {
+                schema: { $ref: "#/components/schemas/Categoria" },
+              },
+            },
+          },
+          responses: {
+            200: {
+              description: "Categoria atualizada com sucesso",
+              content: {
+                "application/json": {
+                  schema: { $ref: "#/components/schemas/Categoria" },
+                },
+              },
+            },
+            404: {
+              description: "Categoria não encontrada",
+            },
+          },
+        },
+        delete: {
+          summary: "Remover uma categoria",
+          tags: ["Categorias"],
+          parameters: [
+            {
+              in: "path",
+              name: "id",
+              schema: { type: "string" },
+              required: true,
+              description: "ID da categoria",
+            },
+          ],
+          responses: {
+            200: {
+              description: "Categoria removida com sucesso",
+            },
+            404: {
+              description: "Categoria não encontrada",
+            },
+          },
+        },
+      },
+      "/atores": {
+        get: {
+          summary: "Listar todos os atores",
+          tags: ["Atores"],
+          responses: {
+            200: {
+              description: "Lista de atores retornada com sucesso",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "array",
+                    items: { $ref: "#/components/schemas/Ator" },
+                  },
+                },
+              },
+            },
+          },
+        },
+        post: {
+          summary: "Criar um novo ator",
+          tags: ["Atores"],
+          requestBody: {
+            required: true,
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  required: ["nome"],
+                  properties: {
+                    nome: { type: "string" },
+                    dataNascimento: { type: "string", format: "date" },
+                    nacionalidade: { type: "string" },
+                    biografia: { type: "string" },
+                  },
+                },
+              },
+            },
+          },
+          responses: {
+            201: {
+              description: "Ator criado com sucesso",
+              content: {
+                "application/json": {
+                  schema: { $ref: "#/components/schemas/Ator" },
+                },
+              },
+            },
+          },
+        },
+      },
+      "/atores/{id}": {
+        get: {
+          summary: "Obter um ator pelo ID",
+          tags: ["Atores"],
+          parameters: [
+            {
+              in: "path",
+              name: "id",
+              schema: { type: "string" },
+              required: true,
+              description: "ID do ator",
+            },
+          ],
+          responses: {
+            200: {
+              description: "Dados do ator retornados com sucesso",
+              content: {
+                "application/json": {
+                  schema: { $ref: "#/components/schemas/Ator" },
+                },
+              },
+            },
+            404: {
+              description: "Ator não encontrado",
+            },
+          },
+        },
+        put: {
+          summary: "Atualizar um ator existente",
+          tags: ["Atores"],
+          parameters: [
+            {
+              in: "path",
+              name: "id",
+              schema: { type: "string" },
+              required: true,
+              description: "ID do ator",
+            },
+          ],
+          requestBody: {
+            required: true,
+            content: {
+              "application/json": {
+                schema: { $ref: "#/components/schemas/Ator" },
+              },
+            },
+          },
+          responses: {
+            200: {
+              description: "Ator atualizado com sucesso",
+              content: {
+                "application/json": {
+                  schema: { $ref: "#/components/schemas/Ator" },
+                },
+              },
+            },
+            404: {
+              description: "Ator não encontrado",
+            },
+          },
+        },
+        delete: {
+          summary: "Remover um ator",
+          tags: ["Atores"],
+          parameters: [
+            {
+              in: "path",
+              name: "id",
+              schema: { type: "string" },
+              required: true,
+              description: "ID do ator",
+            },
+          ],
+          responses: {
+            200: {
+              description: "Ator removido com sucesso",
+            },
+            404: {
+              description: "Ator não encontrado",
+            },
+          },
+        },
+      },
     },
     tags: [
       {
@@ -520,6 +829,14 @@ const options = {
       {
         name: "Locações",
         description: "Gerenciamento de locações",
+      },
+      {
+        name: "Categorias",
+        description: "Gerenciamento de categorias de filmes",
+      },
+      {
+        name: "Atores",
+        description: "Gerenciamento de atores",
       },
     ],
   },

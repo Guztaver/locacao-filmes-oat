@@ -7,6 +7,8 @@ import cors from "cors";
 import filmeRoutes from "./routes/filmeRoutes.js";
 import clienteRoutes from "./routes/clienteRoutes.js";
 import locacaoRoutes from "./routes/locacaoRoutes.js";
+import categoriaRoutes from "./routes/categoriaRoutes.js";
+import atorRoutes from "./routes/atorRoutes.js";
 
 import swaggerSpec from "./config/swagger.js";
 import { apiReference } from "@scalar/express-api-reference";
@@ -24,6 +26,8 @@ mongoose
 app.use("/filmes", filmeRoutes);
 app.use("/clientes", clienteRoutes);
 app.use("/locacoes", locacaoRoutes);
+app.use("/categorias", categoriaRoutes);
+app.use("/atores", atorRoutes);
 
 app.use(
   "/docs",
