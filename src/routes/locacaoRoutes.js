@@ -22,6 +22,17 @@ router.get("/", async (req, res) => {
   }
 });
 
+// READ – GET /locacoes/:id
+router.get("/:id", async (req, res) => {
+  try {
+    const locacao = await Locacao.findById(req.params.id).populate("cliente").populate("filme");
+    if (!locacao) return res.status(404).json({ error: "Locação não encontrada" });
+    res.json(locacao);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // UPDATE – PUT /locacoes/:id
 router.put("/:id", async (req, res) => {
   try {

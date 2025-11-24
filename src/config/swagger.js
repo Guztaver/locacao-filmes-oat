@@ -98,6 +98,35 @@ const options = {
             },
           },
         },
+        LocacaoPopulated: {
+          type: "object",
+          properties: {
+            _id: {
+              type: "string",
+              description: "ID gerado automaticamente pelo MongoDB",
+            },
+            cliente: {
+              $ref: "#/components/schemas/Cliente",
+            },
+            filme: {
+              $ref: "#/components/schemas/Filme",
+            },
+            dataLocacao: {
+              type: "string",
+              format: "date-time",
+              description: "Data da locação",
+            },
+            dataDevolucao: {
+              type: "string",
+              format: "date-time",
+              description: "Data de devolução",
+            },
+            devolvido: {
+              type: "boolean",
+              description: "Status da devolução",
+            },
+          },
+        },
       },
     },
     paths: {
@@ -151,6 +180,32 @@ const options = {
         },
       },
       "/clientes/{id}": {
+        get: {
+          summary: "Obter um cliente pelo ID",
+          tags: ["Clientes"],
+          parameters: [
+            {
+              in: "path",
+              name: "id",
+              schema: { type: "string" },
+              required: true,
+              description: "ID do cliente",
+            },
+          ],
+          responses: {
+            200: {
+              description: "Dados do cliente retornados com sucesso",
+              content: {
+                "application/json": {
+                  schema: { $ref: "#/components/schemas/Cliente" },
+                },
+              },
+            },
+            404: {
+              description: "Cliente não encontrado",
+            },
+          },
+        },
         put: {
           summary: "Atualizar um cliente existente",
           tags: ["Clientes"],
@@ -251,6 +306,32 @@ const options = {
         },
       },
       "/filmes/{id}": {
+        get: {
+          summary: "Obter um filme pelo ID",
+          tags: ["Filmes"],
+          parameters: [
+            {
+              in: "path",
+              name: "id",
+              schema: { type: "string" },
+              required: true,
+              description: "ID do filme",
+            },
+          ],
+          responses: {
+            200: {
+              description: "Dados do filme retornados com sucesso",
+              content: {
+                "application/json": {
+                  schema: { $ref: "#/components/schemas/Filme" },
+                },
+              },
+            },
+            404: {
+              description: "Filme não encontrado",
+            },
+          },
+        },
         put: {
           summary: "Atualizar um filme existente",
           tags: ["Filmes"],
@@ -312,7 +393,7 @@ const options = {
                 "application/json": {
                   schema: {
                     type: "array",
-                    items: { $ref: "#/components/schemas/Locacao" },
+                    items: { $ref: "#/components/schemas/LocacaoPopulated" },
                   },
                 },
               },
@@ -350,6 +431,32 @@ const options = {
         },
       },
       "/locacoes/{id}": {
+        get: {
+          summary: "Obter uma locação pelo ID",
+          tags: ["Locações"],
+          parameters: [
+            {
+              in: "path",
+              name: "id",
+              schema: { type: "string" },
+              required: true,
+              description: "ID da locação",
+            },
+          ],
+          responses: {
+            200: {
+              description: "Dados da locação retornados com sucesso",
+              content: {
+                "application/json": {
+                  schema: { $ref: "#/components/schemas/LocacaoPopulated" },
+                },
+              },
+            },
+            404: {
+              description: "Locação não encontrada",
+            },
+          },
+        },
         put: {
           summary: "Atualizar uma locação existente",
           tags: ["Locações"],

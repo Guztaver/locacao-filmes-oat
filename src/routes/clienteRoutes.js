@@ -22,6 +22,17 @@ router.get("/", async (req, res) => {
   }
 });
 
+// READ – GET /clientes/:id
+router.get("/:id", async (req, res) => {
+  try {
+    const cliente = await Cliente.findById(req.params.id);
+    if (!cliente) return res.status(404).json({ error: "Cliente não encontrado" });
+    res.json(cliente);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // UPDATE – PUT /clientes/:id
 router.put("/:id", async (req, res) => {
   try {
