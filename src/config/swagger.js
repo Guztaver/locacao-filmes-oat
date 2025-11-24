@@ -508,8 +508,22 @@ const options = {
         },
       },
     },
+    tags: [
+      {
+        name: "Clientes",
+        description: "Gerenciamento de clientes",
+      },
+      {
+        name: "Filmes",
+        description: "Gerenciamento de filmes",
+      },
+      {
+        name: "Locações",
+        description: "Gerenciamento de locações",
+      },
+    ],
   },
-  apis: ["./src/routes/*.js"], // Path to the API docs
+  apis: [], // No external files to parse, using manual definition
 };
 
 const swaggerSpec = swaggerJsdoc(options);
